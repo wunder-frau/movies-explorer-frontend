@@ -22,13 +22,13 @@ function AboutMe() {
                   После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.
                 </div>
                 <ul className='aboutme__profiles-list'>
-                <a href='/' className='aboutme__profiles-item'>
-                  <li>Facebook</li>
-                </a>
-                <a href='/' className='aboutme__profiles-item'>
-                  <li className='aboutme__profiles-item'>Github</li>
-                </a>
-              </ul>
+                  <a href='/' className='aboutme__profiles-item'>
+                    <li>Facebook</li>
+                  </a>
+                  <a href='/' className='aboutme__profiles-item'>
+                    <li className='aboutme__profiles-item'>Github</li>
+                  </a>
+                </ul>
               </div>
               <div className='aboutme__image-container'>
                 <div className='aboutme__image'></div>
