@@ -1,10 +1,11 @@
 @import url('../../vendor/fonts/fonts.css');
 
-#root {
+.page {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  box-sizing: border-box;
   min-width: 320px;
   max-width: 1280px;
   margin: 0 auto;
@@ -14,4 +15,5 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
