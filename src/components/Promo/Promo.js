@@ -1,5 +1,5 @@
 import './Promo.css'
-import logo from '../../images/pic__COLOR_landing-logo.svg';
+import logo from '../../images/practicum_logo.svg';
 
 function Promo() {
   return (

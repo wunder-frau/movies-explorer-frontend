@@ -4,7 +4,7 @@ import {Route, Switch} from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
-// import Movies from '../Movies/Movies';
+import Movies from '../Movies/Movies';
 // import Profile from '../Profile/Profile';
 // import Login from '../Login/Login';
 // import Register from '../Register/Register';
@@ -16,12 +16,13 @@ function App() {
       <Switch>
         <Route path='/' exact>
           <Header/>
-          {/* <Main/>
-          <Footer/> */}
+          <Main/>
+          <Footer/>
         </Route>
         <Route path='/movies' exact>
           <Header/>
-          {/* <Footer/> */}
+          <Movies/>
+          <Footer/>
         </Route>
         {/* <Route path='/saved-movies' exact>
           <Header/>

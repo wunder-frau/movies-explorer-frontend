@@ -1,5 +1,5 @@
 @import url('./vendor/normalize.css');
 
 #root{
-  width: 100%;
+  background-color: #202020;
 }
