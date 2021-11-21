@@ -1,10 +1,10 @@
 import React from 'react';
 import './SearchForm.css';
-import FilterCheckbox from '../FilterCheckbox/FilterCheckbox'
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm() {
   return (
-    <div className='search-form'>
+    <section className='search-form'>
       <div className='search-form__container'>
         <form>
           <div className='search-form__wrap'>
@@ -14,7 +14,7 @@ function SearchForm() {
         </form>
         <button type='submit' className='search-form__submit'>Найти</button>
       </div>
-    </div>
+    </section>
   );
 }
 

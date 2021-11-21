@@ -25,12 +25,12 @@ function Header() {
           {pathname === '/' ? (
             <ul className='header__btn-set'>
               <li>
-                <NavLink to='/signup' className='header__link header__signup-text' target='_blank'>
+                <NavLink to='/signup' className='header__link header__signup-text'>
                   Регистрация
                 </NavLink>
               </li>
               <li>
-                <NavLink to='/signin' className='header__link header__btn-signin' target='_blank'>
+                <NavLink to='/signin' className='header__link header__btn-signin'>
                   Войти
                 </NavLink>
               </li>

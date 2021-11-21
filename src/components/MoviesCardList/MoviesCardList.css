@@ -34,12 +34,10 @@
   font-weight: 500;
   line-height: 15px;
   cursor: pointer;
-  transition: linear .4s;
 }
 
 .movies__button:hover {
-  border: solid 2px #fff;
-  transform: scale(1.1);
+  box-shadow:  lawngreen 2px 2px 2px;
 }
 
 .movies__not-found {

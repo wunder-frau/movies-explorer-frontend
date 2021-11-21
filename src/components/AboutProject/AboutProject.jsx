@@ -1,8 +1,9 @@
-import './AboutProject.css'
+import React from 'react';
+import './AboutProject.css';
 
 function AboutProject() {
   return (
-        <div className='about' id='aboutproject'>
+        <section className='about' id='aboutproject'>
           <div className='about__wraper'>
             <div className='about__title-wraper'>
               <h2 className='about__title'>О проекте</h2>
@@ -40,7 +41,7 @@ function AboutProject() {
               </div>
             </div>
           </div>
-        </div>
+        </section>
   );
 }
 

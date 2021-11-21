@@ -1,8 +1,9 @@
-import './NavTab.css'
+import React from 'react';
+import './NavTab.css';
 
 function NavTab() {
   return (
-        <div className='navtab'>
+        <nav className='navtab'>
           <ul className='navtab__list'>
             <a href='/' className='navtab__element' href='#aboutproject'>
               <li className='navtab__element'>О проекте </li>
@@ -14,7 +15,7 @@ function NavTab() {
               <li className='navtab__element'> Студент </li>
             </a>
           </ul>
-        </div>
+        </nav>
   );
 }
 

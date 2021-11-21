@@ -13,10 +13,10 @@ function MoviesCard({name, duration, picture}) {
   return (
     <li className='movies-card'>
       <div className='movies-card__wrap'>
-        <img className='movies-card__image' src={picture} alt='карточка'/>
+        <img className='movies-card__image' src={picture} alt='женщина и дети'/>
       </div>
       <div className='movies-card__description'>
-        <p className='movies-card__name'>{name}</p>
+        <h2 className='movies-card__name'>{name}</h2>
         <p className='movies-card__duration'>{duration}</p>
         {pathname === '/movies' 
           ? <button className={`movies-card__like ${isLiked ? 'movies-card__like_added' : ''}`} onClick={likeButtonHandler}/>

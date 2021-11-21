@@ -5,7 +5,7 @@ function Profile() {
   return (
     <section className='profile'>
       <div class='profile__container'>
-      <h2 className='profile__title'>Привет, Юлия!</h2>
+      <h2 className='profile__title'>Привет, Виталий</h2>
         <form className='profile__form'>
           <label className='profile__label'>
             Имя

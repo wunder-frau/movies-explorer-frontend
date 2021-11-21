@@ -1,8 +1,9 @@
-import './Techs.css'
+import React from 'react';
+import './Techs.css';
 
 function Techs() {
   return (
-        <div className='techs' id='techs'>
+        <section className='techs' id='techs'>
           <div className='techs__wraper'>
             <div className='techs__title-wraper'>
               <h2 className='techs__title'>Технологии</h2>
@@ -25,7 +26,7 @@ function Techs() {
               </ul>
             </div>
           </div>
-        </div>
+        </section>
   );
 }
 

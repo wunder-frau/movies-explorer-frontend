@@ -5,8 +5,8 @@ function FilterCheckbox({ filterText }) {
   return (
     <div className='filter-checkbox'>
       <label className='filter-checkbox__label'>
-        <input type='checkbox' className='filter-checkbox__input' />
-        <span className='filter-checkbox__round' />
+        <input type='checkbox' className='filter-checkbox__input'/>
+        <span className='filter-checkbox__round'/>
       </label>
       <p className='filter-checkbox__text'>{filterText}</p>
     </div>

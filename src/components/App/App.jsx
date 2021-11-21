@@ -6,8 +6,8 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Movies from '../Movies/Movies';
 import Profile from '../Profile/Profile';
-// import Login from '../Login/Login';
-// import Register from '../Register/Register';
+import Login from '../Login/Login';
+import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
 
 function App() {
@@ -33,10 +33,12 @@ function App() {
           <Header/>
           <Profile/>
         </Route>
-        {/* <Route exact path='/signin'>
-        </Route> */}
-        {/* <Route path='/signup' exact>
-        </Route> */}
+        <Route exact path='/signin'>
+          <Login/>
+        </Route>
+        <Route path='/signup' exact>
+          <Register/>
+        </Route>
         <Route path='*'>
           <NotFound/>
         </Route>
