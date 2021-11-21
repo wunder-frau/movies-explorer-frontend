@@ -37,7 +37,6 @@
   margin: 0;
   mix-blend-mode: normal;
   width: 100%;
-  border: 1px solid lawngreen;
 }
 
 @media screen and (max-width: 767px) {
@@ -90,6 +89,10 @@
 
 .portfolio__link:last-of-type {
   border-bottom: none;
+}
+
+.portfolio__link:hover {
+  text-shadow: #4285F4 2px 2px 1px;
 }
 
 .portfolio__arrow {

@@ -31,6 +31,10 @@
   margin-right: 0;
 }
 
+.navtab__element:hover {
+  text-shadow: #4285F4 1px 1px 5px;
+}
+
 @media screen and (max-width: 767px) {
   .navtab__element {
     margin-right: 24px;

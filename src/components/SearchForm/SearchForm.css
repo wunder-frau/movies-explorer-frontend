@@ -67,6 +67,7 @@
 .search-form__submit:hover {
   border: solid 1px inherit;
   transform: scale(1.1);
+  text-shadow: lawngreen 1px 1px 5px;
 }
 
 @media screen and (max-width: 1279px) {

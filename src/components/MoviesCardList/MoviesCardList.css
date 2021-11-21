@@ -68,6 +68,7 @@
 @media screen and (max-width: 576px) {
   .movies__list {
     grid-template-columns: minmax(min-content, max-content);
+    margin: 40px 10px;
   }
 
   .movies {

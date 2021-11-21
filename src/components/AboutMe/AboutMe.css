@@ -50,7 +50,6 @@
   grid-column-gap: 40px;
   max-width: 100%;
   margin-top: 70px;
-  border: 1px solid greenyellow;
 }
 
 @media screen and (max-width: 1279px) {
@@ -75,7 +74,6 @@
   font-size: 14px;
   line-height: 22px;
   margin-bottom: 99px;
-  border: 1px solid purple;
 }
 
 @media screen and (max-width: 1024px) {
@@ -102,7 +100,6 @@
   line-height: 20px;
   margin: 18px 0 26px;
   mix-blend-mode: normal;
-  border: 1px solid purple;
 }
 
 @media screen and (max-width: 1024px) {
@@ -129,7 +126,6 @@
   line-height: 58px;
   letter-spacing: -0.04em;
   margin: 0;
-  border: 1px solid plum;
 }
 
 @media screen and (max-width: 1279px) { 
@@ -162,11 +158,17 @@
 }
 
 .aboutme__image {
+  background-image: url(../../images/profile_img.jpg);
+  background-size: cover;
   width: 270px;
   height: 327px;
   float: right;
   background-color:#3DDC84;
   border-radius: 10px;
+}
+
+.aboutme__image:hover {
+  box-shadow: #4285F4 2px 2px 5px;
 }
 
 @media screen and (max-width: 767px) {
@@ -195,6 +197,10 @@
   margin-right: 20px;
   text-decoration: none;
   color: #fff;
+}
+
+.aboutme__profiles-item:hover {
+  text-shadow: #4285F4 1px 1px 5px;
 }
 
 @media screen and (max-width: 767px) {

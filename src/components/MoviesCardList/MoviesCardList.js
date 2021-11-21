@@ -3,7 +3,7 @@ import './MoviesCardList.css'
 import MoviesCard from '../MoviesCard/MoviesCard';
 import picture from '../../images/test-card.png';
 
-function MoviesCardList() {
+function MoviesCardList({isLiked}) {
   return (
     <section className='movies'>
       <p className='movies__not-found'>Ничего не найдено</p>

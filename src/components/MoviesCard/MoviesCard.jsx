@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import './MoviesCard.css';
 import { useLocation } from 'react-router-dom';
-import testCard from '../../images/test-card.png';
-import moviesIconCard from '../../images/added-card-icon.svg';
-import moviesSavedCardIcon from '../../images/delete-card-icon.svg';
-import saveCardIcon from '../../images/save-card-icon.svg';
 
 function MoviesCard({name, duration, picture}) {
   const { pathname } = useLocation();

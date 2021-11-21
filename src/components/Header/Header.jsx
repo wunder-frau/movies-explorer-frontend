@@ -36,9 +36,7 @@ function Header() {
               </li>
             </ul>
           ) : (
-            <button className='header__btn-account header__btn-account_none' type='button'>
-              Аккаунт
-            </button> 
+            <Link to='/profile' className='header__btn-account header__btn-account_none'>Аккаунт</Link>
           )}
 
         {pathname === '/' ? (
@@ -83,7 +81,8 @@ function Header() {
               >
                 <Link className='header__signup-text' to={`${pathname === '/' ? '/signup' : '/profile'}`}></Link>
                 {pathname === '/' ? (<Link to='/signin' className='header__btn-signin' type='button'>Войти</Link>
-                  ) : (<button className='header__btn-account' type='button'>Аккаунт</button>
+                  ) : (
+                  <Link to='/profile' className='header__btn-account' type='button'>Аккаунт</Link>
                 )}
               </div>
             </div>

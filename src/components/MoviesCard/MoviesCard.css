@@ -2,7 +2,6 @@
   max-width: 364px;
   list-style: none;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
-  border: 1px solid greenyellow;
 }
 
 .movies-card__image {
@@ -43,7 +42,7 @@
   border: none;
   background-color: #202020;
   cursor: pointer;
-  background-image: url('../../images/cross.svg');
+  background-image: url('../../images/close.svg');
   width: 7px;
   height: 7px;
   background-repeat: no-repeat;

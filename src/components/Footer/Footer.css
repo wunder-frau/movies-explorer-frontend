@@ -87,6 +87,10 @@
   max-width: 100%;
 }
 
+.footer__copyright-year:hover {
+  text-shadow: #4285F4 2px 2px 1px;
+}
+
 @media screen and (max-width: 767px) {
   .footer__copyright-year {
     font-size: 12px;
@@ -136,6 +140,10 @@
   margin-right: 20px;
   text-decoration: none;
   color: #fff;
+}
+
+.footer__profiles-item:hover {
+  text-shadow: #4285F4 2px 2px 1px;
 }
 
 @media screen and (max-width: 767px) {

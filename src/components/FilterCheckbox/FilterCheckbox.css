@@ -48,10 +48,6 @@
   border-radius: 20px;
 }
 
-.filter-checkbox__input:checked + .filter-checkbox__round {
-  /* background-color: #2BE080; */
-}
-
 .filter-checkbox__input:checked + .filter-checkbox__round:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
