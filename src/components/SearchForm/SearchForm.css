@@ -21,7 +21,7 @@
 }
 
 .search-form__text {
-  font-family: Inter;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -44,8 +44,16 @@
   color: #fff;
 }
 
+.search-form__input:focus {
+  box-shadow: 0 0 1px 1px greenyellow;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  transition: .3s;
+}
+
 .search-form__submit {
-  font-family: Inter;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
