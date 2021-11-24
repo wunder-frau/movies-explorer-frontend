@@ -82,7 +82,7 @@
   line-height: 10px;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1279px) {
 
   .movies-card__description {
     margin: 14px 14px 0;
