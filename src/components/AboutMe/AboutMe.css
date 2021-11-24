@@ -44,23 +44,22 @@
   border-bottom: 1px solid #DADADA;
 }
 
-.aboutme__text-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 550px);
-  grid-column-gap: 40px;
-  max-width: 100%;
-  margin-top: 70px;
+.aboutme__elements {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 66px;
+  width: 100%;
 }
 
-@media screen and (max-width: 1279px) {
-  .aboutme__text-container {
-    grid-template-columns: repeat(auto-fit, 319px);
-    grid-column-gap: 30px;
-  }
+.aboutme__text-wraper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 767px) {
-  .aboutme__text-container {
+  .aboutme__elements {
     display: flex;
     flex-direction: column-reverse;
   }
@@ -68,6 +67,7 @@
 
 .aboutme__text {
   width: 100%;
+  max-width: 600px;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -81,6 +81,7 @@
     font-size: 12px;
     line-height: 18px;
     margin-bottom: 87px;
+    max-width: 364px;
   }
 }
 
@@ -145,7 +146,7 @@
 .aboutme__image-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: flex-end;
 
 }
@@ -158,13 +159,18 @@
 }
 
 .aboutme__image {
-  background-image: url(../../images/profile_img.jpg);
-  background-size: cover;
-  width: 270px;
+  max-width: 270px;
   height: 327px;
   float: right;
-  background-color:#3DDC84;
   border-radius: 10px;
+}
+
+@media screen and (max-width: 1279px) { 
+
+  .aboutme__image {
+    max-width: 255px;
+    height: 307px;
+  }
 }
 
 .aboutme__image:hover {
@@ -173,7 +179,7 @@
 
 @media screen and (max-width: 767px) {
   .aboutme__image {
-    width: 292px;
+    max-width: 292px;
     height: 352px;
     max-width: 100%;
     margin-bottom: 40px;

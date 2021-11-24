@@ -17,7 +17,7 @@ function AboutProject() {
                   Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.
                 </div>
               </div>
-              <div lassName='about__text-item'>
+              <div className='about__text-item'>
                 <h3 className='about__text-title'>
                   На выполнение диплома ушло 5 недель
                 </h3>

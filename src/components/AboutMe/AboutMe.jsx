@@ -1,5 +1,6 @@
 import React from 'react';
 import './AboutMe.css';
+import avatar from '../../images/profile_img.jpg';
 
 function AboutMe() {
   return (
@@ -8,8 +9,8 @@ function AboutMe() {
             <div className='aboutme__title-wraper'>
               <h2 className='aboutme__title'>Студент</h2>
             </div>
-            <div className='aboutme__text-container'>
-              <div>
+            <div className='aboutme__elements'>
+              <div className='aboutme__text-wraper'>
                 <h3 className='aboutme__text-title'>
                   Ирина
                 </h3>
@@ -38,7 +39,7 @@ function AboutMe() {
                 </ul>
               </div>
               <div className='aboutme__image-container'>
-                <div className='aboutme__image'></div>
+                <img className='aboutme__image' src={avatar} alt='фото студента'/>
               </div>
             </div>
           </div>
