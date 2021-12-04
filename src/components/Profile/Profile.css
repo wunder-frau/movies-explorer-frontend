@@ -33,6 +33,7 @@
   row-gap: 17px;
   padding-top: 123px;
   padding-bottom: 220px;
+  border: 1px solid red;
 }
 
 .profile__label {
@@ -70,7 +71,7 @@
   text-decoration: none;
   border: none;
   background-color: #202020;
-  margin: 0;
+  margin: 16px 0 0 0;
   padding: 0;
 }
 

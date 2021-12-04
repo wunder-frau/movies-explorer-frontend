@@ -15,7 +15,7 @@ function Login({ onLogin, setError, setIsFormSent, isFormSent, isError }) {
 
   useEffect(() => {
     setError(false);
-  }, [history]);
+  }, [history, setError]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -37,7 +37,7 @@ function Login({ onLogin, setError, setIsFormSent, isFormSent, isError }) {
             promt: 'Ещё не зарегистрированы?',
             route: '/signup',
             linkText: 'Регистрация',
-            errorText: "При попытке авторизации произошла ошибка.",
+            errorText: 'При попытке авторизации произошла ошибка.',
           }}
           handleChange={handleChange}
           errors={errors}

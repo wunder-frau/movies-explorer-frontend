@@ -7,7 +7,7 @@ class Api {
     this._headers = options.headers;
   }
   _updateToken() {
-    this._headers.authorization = `Bearer ${localStorage.getItem("jwt")}`;
+    this._headers.Authorization = `Bearer ${localStorage.getItem("jwt")}`;
   }
   _checkResponse(res) {
     if (res.ok) {
@@ -29,7 +29,7 @@ class Api {
       this._checkResponse
     );
   }
-
+  //отправка инфо
   patchProfileInfo(inputsValue) {
     const newOptions = {
       ...this._options,
@@ -82,7 +82,6 @@ class Api {
 export default new Api({
   baseUrl: BASE_URL,
   headers: {
-    authorization: `Bearer ${localStorage.getItem("jwt")}`,
     "Content-Type": "application/json",
   },
 });
