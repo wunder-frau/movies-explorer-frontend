@@ -7,6 +7,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 const Movies = (props) => {
   return (
     <section className="movies">
+      <Preloader /> 
       <SearchForm
         handleSubmit={props.handleSubmit}
         handleChangeRadio={props.handleChange}

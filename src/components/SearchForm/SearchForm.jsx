@@ -43,7 +43,7 @@ function SearchForm({ handleSubmit, handleChangeRadio }) {
             </span>
           <FilterCheckbox filterText='Короткометражки' handleChangeRadio={handleChangeRadio} />
         </form>
-        <button type='submit' className='search-form__submit'>Найти</button>
+        <button type='submit' onClick={handleSearchSubmit} className='search-form__submit'>Найти</button>
       </div>
     </section>
   );

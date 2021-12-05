@@ -76,6 +76,8 @@ const App = () => {
           setCurrentUser(user.data);
           setSavedMovies(movies.data);
           setSavedMoviesId(movies.data.map((movie) => movie.movieId));
+          console.log(movies.data);
+          console.log(user.data);
         })
         .catch((e) => console.log(e));
     }
@@ -222,12 +224,13 @@ const App = () => {
   const handleSaveMovie = (movie) => {
     mainApi
       .saveMovie(movie)
-      .then((m) => {
+      .then((movie) => {
         setSavedMoviesId([...savedMoviesId, movie.id]);
-        setSavedMovies([...savedMovies, m]);
+        setSavedMovies([...savedMovies, movie]);
       })
       .catch((err) => {
         console.error(err);
+        console.log(movie.id);
       });
   };
   const deleteMovie = (movie) => {

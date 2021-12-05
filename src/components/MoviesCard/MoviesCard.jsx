@@ -1,6 +1,7 @@
-import React from 'react';
+import { React, useState, useContext, useEffect } from 'react';
 import './MoviesCard.css';
 import { HourDuration } from '../../utils/constatns';
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 const MoviesCard = ({
   movie,
@@ -9,16 +10,18 @@ const MoviesCard = ({
   deleteMovie,
   handleSaveMovie,
 }) => {
-  const handleIsLike = (card, savedCardsId) => {
-    if (card.id) {
-      return savedCardsId.some((el) => el === card.id);
+  const handleIsLike = (movie, savedCardsId) => {
+    if (movie.id) {
+      return savedCardsId.some((el) => el === movie.id);
     }
   };
 
-  let isLiked = handleIsLike(movie, savedMoviesId);
-  const cardLikeButtonClassName = `movies-card__like ${
-    isLiked ? 'movies-card__like_added' : ''
-  }`;
+  const [isLiked , setIsLiked] = useState(false)
+  const currentUser = useContext(CurrentUserContext);
+
+  
+  let isLike = handleIsLike(movie, savedMoviesId);
+
   const hours = Math.trunc(movie.duration / HourDuration);
   const minutes = movie.duration % HourDuration;
   const time = `${hours > 0 ? hours + 'ч ' : ''}${
@@ -26,14 +29,20 @@ const MoviesCard = ({
   }`;
   const trailer = `${isSaved ? movie.trailer : movie.trailerLink}`;
 
-  function handleSave() {
+
+  const cardLikeButtonClassName = (
+    isLiked ? 'movies-card__like movies-card__like_added' : 'movies-card__like'
+  );
+
+  function handleSave(evt) {
     if (isSaved) {
       deleteMovie(movie);
     } else {
-      if (isLiked) {
+      if (isLike) {
         deleteMovie(movie);
       } else {
         handleSaveMovie(movie);
+        setIsLiked(true);
       }
     }
   }
@@ -41,7 +50,7 @@ const MoviesCard = ({
   return (
     <li className='movies-card'>
     <div className='movies-card__wrap'>
-    <a
+      <a
           href={
             trailer.startsWith('https') ? trailer : 'https://www.youtube.com'
           }
@@ -51,7 +60,7 @@ const MoviesCard = ({
         <img
           className='movies-card__image'
           src={
-            ''
+            isSaved
               ? movie.image
               : `https://api.nomoreparties.co${movie.image.url}`
           }
@@ -62,10 +71,10 @@ const MoviesCard = ({
     <div className='movies-card__description'>
       <p className='movies-card__name'>{movie.nameRU}</p>
       <p className='movies-card__duration'>{time}</p>
-      <button
-        className={isSaved ? 'movies-card__like-delete' : cardLikeButtonClassName}
-        onClick={handleSave}
-/>
+        <button
+          className={isSaved ? 'movies-card__like-delete' : cardLikeButtonClassName}
+          onClick={handleSave}
+        />
     </div>
   </li>
 );

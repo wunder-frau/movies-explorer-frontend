@@ -6,9 +6,11 @@ class Api {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
   }
+
   _updateToken() {
     this._headers.Authorization = `Bearer ${localStorage.getItem("jwt")}`;
   }
+
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
@@ -29,7 +31,7 @@ class Api {
       this._checkResponse
     );
   }
-  //отправка инфо
+
   patchProfileInfo(inputsValue) {
     const newOptions = {
       ...this._options,
