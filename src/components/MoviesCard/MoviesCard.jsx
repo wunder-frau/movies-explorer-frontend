@@ -60,7 +60,7 @@ const MoviesCard = ({
             aria-label="delete"
             onClick={handleSave}
             type="button"
-            className={'movies-card__like-delete'}
+            className='movies-card__like-delete'
           />
         )}
         {!isSaved && (

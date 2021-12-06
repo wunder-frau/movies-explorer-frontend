@@ -236,12 +236,13 @@ const App = () => {
   };
 
   const deleteMovie = (movie) => {
-    let movieId = savedMovies.filter((f) => f.movieId === movie.id || f.data ?.movieId === movie.id)[0];
-    if (movieId) {
-      movieId = movieId._id || movieId.data._id;
-    }
+    const movieId = !movie.owner
+                    ? savedMovies.find(savedMovie => savedMovie.movieId === String(movie.id))._id
+                    : movie._id;
+
+    console.log(movieId);
     mainApi
-      .removeMovie(movie.owner ? movie._id : movieId)
+      .removeMovie(movieId)
       .then((c) => {
         setSavedMovies(savedMovies.filter((film) => film._id !== c.data._id));
         setSavedMoviesId(savedMoviesId.filter((id) => id !== c.data.movieId));
