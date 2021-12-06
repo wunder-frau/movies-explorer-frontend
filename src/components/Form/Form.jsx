@@ -45,7 +45,7 @@ function Form({
         <span className='form__input_error'> {errors.password}</span>
       ) : null}
       {isError ? (
-        <span className='form__submit_error' id='login-error'>
+        <span className='form__input_error' id='login-error'>
           {isError.message ? isError.message : submitText.errorText}
         </span>
       ) : null}

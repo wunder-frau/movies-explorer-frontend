@@ -96,11 +96,13 @@ const App = () => {
       handleSearchSavedMovies(savedKeyWord);
     }
   }, [savedMovies]);
+
   useEffect(() => {
     if (savedMovies.length || foundSavedMovies.length) {
       handleSearchSavedMovies(savedKeyWord);
     }
   }, [isShortSavedFilmChecked]);
+
   useEffect(() => {
     if (localStorage.getItem('foundMovies')) {
       handleSearchMoviesChecked();
@@ -221,22 +223,18 @@ const App = () => {
     setFoundSavedMovies(movies);
   };
 
-  const handleSaveMovie = (movie) => {
+  function handleSaveMovie(movie) {
     mainApi
       .saveMovie(movie)
       .then((movie) => {
-        setSavedMoviesId([...savedMoviesId, movie.id]);
-        setSavedMovies([...savedMovies, movie]);
+        setSavedMoviesId([...savedMoviesId, movie.data.id]);
+        setSavedMovies([...savedMovies, movie.data]);
       })
-      .catch((err) => {
-        console.error(err);
-        console.log(movie.id);
-      });
+      .catch((err) => { console.error(err); });
   };
+
   const deleteMovie = (movie) => {
-    let movieId = savedMovies.filter(
-      (f) => f.movieId === movie.id || f.data?.movieId === movie.id
-    )[0];
+    let movieId = savedMovies.filter((f) => f.movieId === movie.id || f.data ?.movieId === movie.id)[0];
     if (movieId) {
       movieId = movieId._id || movieId.data._id;
     }

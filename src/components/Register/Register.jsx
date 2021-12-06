@@ -37,7 +37,7 @@ function Register({
       </Link>
       <h2 className='register__title'>Добро пожаловать!</h2>
 
-      <span className='form__input_error'>Текст ошибки</span>
+      <span className='form__input_error'>{errors.name}</span>
         <Form
           submitText={{
             buttonText: 'Зарегистрироваться',
@@ -71,7 +71,7 @@ function Register({
             maxLength='40'
           />
           {errors.name ? (
-            <span className='form__input-error'>{errors.name}</span>
+            <span className='form__input_error'>{errors.name}</span>
           ) : null}
         </Form>
       </div>

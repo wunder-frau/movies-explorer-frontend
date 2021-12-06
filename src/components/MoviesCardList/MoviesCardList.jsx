@@ -54,17 +54,17 @@ const MoviesCardList = ({
     <section className='movies'>
       <Preloader isLoading={isLoading} />
       <ul className='movies__list'>
-      {
-          movies.reduce((filmsBatch, movie) => {
+      {movies === "NotFound"
+        ? ""
+        :movies.reduce((filmsBatch, movie) => {
               if (filmsBatch.length < filtredMovies.length) {
                 filmsBatch.push(
                   <MoviesCard
                     movie={movie}
-                    isSaved={isSaved}
-                    key={isSaved ? movie._id : movie.id}
-                    handleSaveMovie={handleSaveMovie}
                     savedMoviesId={savedMoviesId}
+                    isSaved={isSaved}
                     deleteMovie={deleteMovie}
+                    handleSaveMovie={handleSaveMovie}
                   />
                 );
               }

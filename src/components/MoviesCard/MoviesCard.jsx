@@ -1,7 +1,6 @@
 import { React, useState, useContext, useEffect } from 'react';
 import './MoviesCard.css';
 import { HourDuration } from '../../utils/constatns';
-import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 const MoviesCard = ({
   movie,
@@ -17,9 +16,7 @@ const MoviesCard = ({
   };
 
   const [isLiked , setIsLiked] = useState(false)
-  const currentUser = useContext(CurrentUserContext);
 
-  
   let isLike = handleIsLike(movie, savedMoviesId);
 
   const hours = Math.trunc(movie.duration / HourDuration);
@@ -30,8 +27,8 @@ const MoviesCard = ({
   const trailer = `${isSaved ? movie.trailer : movie.trailerLink}`;
 
 
-  const cardLikeButtonClassName = (
-    isLiked ? 'movies-card__like movies-card__like_added' : 'movies-card__like'
+  const cardLikeButtonClassName = ( 
+    isLiked ? `movies-card__like movies-card__like_added` : `movies-card__like`
   );
 
   function handleSave(evt) {
@@ -42,9 +39,14 @@ const MoviesCard = ({
         deleteMovie(movie);
       } else {
         handleSaveMovie(movie);
-        setIsLiked(true);
+        handleLikeMovie()
       }
     }
+
+}
+
+  function handleLikeMovie() {
+    setIsLiked(!isLiked);
   }
 
   return (
@@ -71,10 +73,22 @@ const MoviesCard = ({
     <div className='movies-card__description'>
       <p className='movies-card__name'>{movie.nameRU}</p>
       <p className='movies-card__duration'>{time}</p>
-        <button
-          className={isSaved ? 'movies-card__like-delete' : cardLikeButtonClassName}
-          onClick={handleSave}
-        />
+        {isSaved && (
+          <button
+            aria-label="delete"
+            onClick={handleSave}
+            type="button"
+            className={'movies-card__like-delete'}
+          />
+        )}
+        {!isSaved && (
+          <button
+            aria-label="like"
+            type="button"
+            onClick={handleSave}
+            className={cardLikeButtonClassName}
+          />
+        )}
     </div>
   </li>
 );

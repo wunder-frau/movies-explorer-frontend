@@ -8,9 +8,7 @@ function SavedMovies(props) {
         handleSubmit={props.handleSubmit}
         handleChangeRadio={props.handleChange}
       />
-      {props.movies === "NotFound" ? (
-        <p className="movies__found-error">Ничего не найдено</p>
-      ) : null}
+      {props.movies === "NotFound" ? (<p className="movies__found-error">Ничего не найдено</p>) : null}
       <MoviesCardList {...props} isSaved={true} />
     </section>
   );
