@@ -7,17 +7,13 @@ const MoviesCard = ({
   savedMoviesId,
   isSaved,
   deleteMovie,
-  handleSaveMovie,
+  handleSaveMovie
 }) => {
-  const handleIsLike = (movie, savedCardsId) => {
-    if (movie.id) {
-      return savedCardsId.some((el) => el === movie.id);
-    }
+  const findInSaved = (movie) => {
+    if (movie.id)
+      return savedMoviesId.some((el) => el === String(movie.id));
   };
-
-  const [isLiked , setIsLiked] = useState(false)
-
-  let isLike = handleIsLike(movie, savedMoviesId);
+  const [isLiked, setIsLiked] = useState(findInSaved(movie));
 
   const hours = Math.trunc(movie.duration / HourDuration);
   const minutes = movie.duration % HourDuration;
@@ -26,27 +22,13 @@ const MoviesCard = ({
   }`;
   const trailer = `${isSaved ? movie.trailer : movie.trailerLink}`;
 
-
-  const cardLikeButtonClassName = ( 
-    isLiked ? `movies-card__like movies-card__like_added` : `movies-card__like`
-  );
-
   function handleSave(evt) {
-    if (isSaved) {
+    if (isSaved || isLiked) {
       deleteMovie(movie);
-    } else {
-      if (isLike) {
-        deleteMovie(movie);
-      } else {
-        handleSaveMovie(movie);
-        handleLikeMovie()
-      }
+    } else if (!isSaved) {
+      handleSaveMovie(movie);
+      setIsLiked(!isLiked);
     }
-
-}
-
-  function handleLikeMovie() {
-    setIsLiked(!isLiked);
   }
 
   return (
@@ -86,7 +68,7 @@ const MoviesCard = ({
             aria-label="like"
             type="button"
             onClick={handleSave}
-            className={cardLikeButtonClassName}
+            className={isLiked ? 'movies-card__like movies-card__like_added' : 'movies-card__like'}
           />
         )}
     </div>

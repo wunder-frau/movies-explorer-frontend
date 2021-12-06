@@ -57,6 +57,8 @@ const App = () => {
       auth
         .checkToken(token)
         .then((res) => {
+          localStorage.removeItem('foundMovies');
+          setMovies([]);
           if (res.data) {
             setLoggedIn(true);
           }
