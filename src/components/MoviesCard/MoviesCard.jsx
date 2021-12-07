@@ -1,6 +1,6 @@
 import { React, useState, useContext, useEffect } from 'react';
 import './MoviesCard.css';
-import { HourDuration } from '../../utils/constatns';
+import { duration } from '../../utils/constatns';
 
 const MoviesCard = ({
   movie,
@@ -11,12 +11,12 @@ const MoviesCard = ({
 }) => {
   const findInSaved = (movie) => {
     if (movie.id)
-      return savedMoviesId.some((el) => el === String(movie.id));
+      return savedMoviesId.some((savedMovie) => savedMovie === String(movie.id));
   };
   const [isLiked, setIsLiked] = useState(findInSaved(movie));
 
-  const hours = Math.trunc(movie.duration / HourDuration);
-  const minutes = movie.duration % HourDuration;
+  const hours = Math.trunc(movie.duration / duration);
+  const minutes = movie.duration % duration;
   const time = `${hours > 0 ? hours + 'ч ' : ''}${
     minutes > 0 ? minutes + 'м' : ''
   }`;
@@ -25,8 +25,10 @@ const MoviesCard = ({
   function handleSave(evt) {
     if (isSaved || isLiked) {
       deleteMovie(movie);
+      setIsLiked(!isLiked);
     } else if (!isSaved) {
       handleSaveMovie(movie);
+      savedMoviesId.push(String(movie.id));
       setIsLiked(!isLiked);
     }
   }

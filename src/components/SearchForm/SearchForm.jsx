@@ -27,16 +27,17 @@ function SearchForm({ handleSubmit, handleChangeRadio }) {
         <form className='search-form__form' onSubmit={handleSearchSubmit}>
           <div className='search-form__wrap'>
             <input placeholder='Фильм'
-            className='search-form__input search-form__text'
-            value={values.key}
-            onChange={handleChange}
-            name='key'
-            autoComplete='off'
-            id='key-input'
-            type='text'
-            minLength='1'
-            maxLength='60'
-            required />
+              className='search-form__input search-form__text'
+              value={values.key}
+              onChange={handleChange}
+              name='key'
+              autoComplete='off'
+              id='key-input'
+              type='text'
+              minLength='1'
+              maxLength='60'
+              required
+            />
           </div>
           <span className='searchform__error' id='key-input-error'>
               {searchError}

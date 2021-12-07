@@ -1,5 +1,5 @@
 export const ShortFilmDuration = 40;
-export const HourDuration = 60;
+export const duration = 60;
 export const WidthScreenRebuild = 600;
 export const FilmsBatchLengthWide = 4;
 export const FilmsBatchLengthNarrow = 5;

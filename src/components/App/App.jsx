@@ -20,27 +20,27 @@ import * as auth from '../../utils/authApi';
 import mainApi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { getMovies } from '../../utils/MoviesApi';
-import searchMovies from '../../utils/searchMovies';
+import Search from '../../utils/Search';
 import SavedMovies from '../SavedMovies/SavedMovies';
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
   const { pathname } = useLocation();
   const jwt = localStorage.getItem('jwt');
-  const [isRegisterError, setIsRegisterError] = useState('');
-  const [isLoginError, setIsLoginError] = useState('');
-  const [isProfileUpdateError, setIsProfileUpdateError] = useState('');
-  const [isSearchError, setIsSearchError] = useState(false);
-  const [isSearchLoading, setIsSearchLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isErrorReg, setIsErrorReg] = useState('');
+  const [isErrorLogin, setIsErrorLogin] = useState('');
+  const [isErrorUserUpdate, setIsErrorUserUpdate] = useState('');
+  const [isErrorSearch, setIsErrorSearch] = useState(false);
+  const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
-  const [isOnlyCheckedSearch, setIsOnlyCheckedSearch] = useState(false);
+  const [isRadioChecked, setIsRadioChecked] = useState(false);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
   const [savedMoviesId, setSavedMoviesId] = useState([]);
   const [isNotFound, setIsNotFound] = useState(false);
   const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
-  const [savedKeyWord, setSavedKeyWord] = useState('');
+  const [usedKey, setUsedKey] = useState('');
   const [isFormSent, setIsFormSent] = useState(false);
   const [isShortSavedFilmChecked, setIsShortSavedFilmChecked] = useState(false);
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
@@ -51,7 +51,7 @@ const App = () => {
   );
 
   useEffect(() => {
-    console.log(localStorage);
+    // console.log(localStorage);
     const token = localStorage.getItem('jwt');
     if (token) {
       auth
@@ -78,8 +78,8 @@ const App = () => {
           setCurrentUser(user.data);
           setSavedMovies(movies.data);
           setSavedMoviesId(movies.data.map((movie) => movie.movieId));
-          console.log(movies.data);
-          console.log(user.data);
+          // console.log(movies.data);
+          // console.log(user.data);
         })
         .catch((e) => console.log(e));
     }
@@ -94,20 +94,20 @@ const App = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if (savedKeyWord) {
-      handleSearchSavedMovies(savedKeyWord);
+    if (usedKey) {
+      handleSearchSavedMovies(usedKey);
     }
   }, [savedMovies]);
 
   useEffect(() => {
     if (savedMovies.length || foundSavedMovies.length) {
-      handleSearchSavedMovies(savedKeyWord);
+      handleSearchSavedMovies(usedKey);
     }
   }, [isShortSavedFilmChecked]);
 
   useEffect(() => {
     if (localStorage.getItem('foundMovies')) {
-      handleSearchMoviesChecked();
+      handleSearchShortMovies();
     }
   }, [isShortFilmChecked]);
 
@@ -133,7 +133,7 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
-        setIsLoginError(err);
+        setIsErrorLogin(err);
       })
       .finally(() => {
         setIsFormSent(false);
@@ -148,7 +148,7 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
-        setIsRegisterError(err);
+        setIsErrorReg(err);
       })
       .finally(() => {
         setIsFormSent(false);
@@ -164,14 +164,14 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
-        setIsProfileUpdateError(err);
+        setIsErrorUserUpdate(err);
       })
       .finally(() => {
         setIsFormSent(false);
       });
   };
 
-  const handleSearchMoviesChecked = () => {
+  const handleSearchShortMovies = () => {
     const isShort = isShortFilmChecked;
     const cards = JSON.parse(localStorage.getItem('foundMovies'));
     const shortCards = cards.filter((movie) => {
@@ -190,8 +190,8 @@ const App = () => {
   };
 
   const handleSearchMovies = async (searchValue) => {
-    setIsSearchError(false);
-    setIsSearchLoading(true);
+    setIsErrorSearch(false);
+    setIsPreloaderLoading(true);
     setIsNotFound(false);
     try {
       let movies = JSON.parse(localStorage.getItem('movies'));
@@ -200,24 +200,24 @@ const App = () => {
         localStorage.setItem('movies', JSON.stringify(films));
         movies = JSON.parse(localStorage.getItem('movies'));
       }
-      const cards = searchMovies(movies, searchValue);
+      const cards = Search(movies, searchValue);
       localStorage.setItem('foundMovies', JSON.stringify(cards));
-      handleSearchMoviesChecked();
+      handleSearchShortMovies();
     } catch (err) {
       console.error(err);
-      setIsSearchError(true);
+      setIsErrorSearch(true);
     } finally {
-      setIsSearchLoading(false);
+      setIsPreloaderLoading(false);
     }
   };
 
   const handleSearchSavedMovies = (searchValue) => {
-    setIsOnlyCheckedSearch(false);
+    setIsRadioChecked(false);
     if (!searchValue) {
-      setIsOnlyCheckedSearch(true);
+      setIsRadioChecked(true);
     }
-    setSavedKeyWord(searchValue);
-    const movies = searchMovies(
+    setUsedKey(searchValue);
+    const movies = Search(
       savedMovies,
       searchValue,
       isShortSavedFilmChecked
@@ -240,7 +240,6 @@ const App = () => {
                     ? savedMovies.find(savedMovie => savedMovie.movieId === String(movie.id))._id
                     : movie._id;
 
-    console.log(movieId);
     mainApi
       .removeMovie(movieId)
       .then((c) => {
@@ -254,22 +253,22 @@ const App = () => {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
+      <div className='page'>
         <Header loggedIn={loggedIn} />
         <Switch>
-          <Route path="/" exact>
+          <Route path='/' exact>
             <Main />
           </Route>
           <ProtectedRoute
             exact
-            path="/movies"
+            path='/movies'
             loggedIn={jwt}
             component={Movies}
             movies={movies}
             savedMoviesId={savedMoviesId}
             handleSubmit={handleSearchMovies}
-            isLoading={isSearchLoading}
-            isError={isSearchError}
+            isLoading={isPreloaderLoading}
+            isError={isErrorSearch}
             isNotFound={isNotFound}
             handleSaveMovie={handleSaveMovie}
             deleteMovie={deleteMovie}
@@ -277,14 +276,14 @@ const App = () => {
           />
           <ProtectedRoute
             exact
-            path="/saved-movies"
+            path='/saved-movies'
             loggedIn={jwt}
             component={SavedMovies}
             movies={
-              savedKeyWord || isOnlyCheckedSearch
+              usedKey || isRadioChecked
                 ? foundSavedMovies.length
                   ? foundSavedMovies
-                  : "NotFound"
+                  : 'NotFound'
                 : savedMovies
             }
             deleteMovie={deleteMovie}
@@ -292,45 +291,45 @@ const App = () => {
             handleChange={setIsShortSavedFilmChecked}
           />
           <ProtectedRoute
-            path="/profile"
+            path='/profile'
             loggedIn={jwt}
             component={Profile}
             handleSignOut={handleSignOut}
             handleUpdateUser={handleUpdateUser}
-            isError={isProfileUpdateError}
-            setError={setIsProfileUpdateError}
+            isError={isErrorUserUpdate}
+            setError={setIsErrorUserUpdate}
             isSuccess={isUpdateSuccessful}
             isFormSent={isFormSent}
             setIsFormSent={setIsFormSent}
             setSuccess={setIsUpdateSuccessful}
           />
-          <Route exact path="/signin">
+          <Route exact path='/signin'>
             {!loggedIn ? (
               <Login
                 onLogin={onLogin}
-                isError={isLoginError}
-                setError={setIsLoginError}
+                isError={isErrorLogin}
+                setError={setIsErrorLogin}
                 isFormSent={isFormSent}
                 setIsFormSent={setIsFormSent}
               />
             ) : (
-              <Redirect to="/movies" />
+              <Redirect to='/movies' />
             )}
           </Route>
-          <Route path="/signup" exact>
+          <Route path='/signup' exact>
             {!loggedIn ? (
               <Register
                 onRegister={onRegister}
-                isError={isRegisterError}
-                setError={setIsRegisterError}
+                isError={isErrorReg}
+                setError={setIsErrorReg}
                 isFormSent={isFormSent}
                 setIsFormSent={setIsFormSent}
               />
             ) : (
-              <Redirect to="/movies" />
+              <Redirect to='/movies' />
             )}
           </Route>
-          <Route path="*">
+          <Route path='*'>
             <NotFound />
           </Route>
         </Switch>

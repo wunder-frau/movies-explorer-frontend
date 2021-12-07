@@ -1,4 +1,4 @@
-function searchMovies(movies, keyWord, isShort) {
+function Search(movies, keyWord, isShort) {
   if (movies.length) {
     if (movies[0].owner) {
       return movies.filter((movie) => {
@@ -22,4 +22,4 @@ function searchMovies(movies, keyWord, isShort) {
   }
 }
 
-export default searchMovies;
+export default Search;

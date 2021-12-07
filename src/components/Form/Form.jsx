@@ -18,32 +18,28 @@ function Form({
       {children}
       <label htmlFor='email' className='form__label'>E-mail</label>
       <input
-      required
-      id='email'
-      className='form__input'
-      minLength='2'
-      type='email'
-      name='email'
-      value={values.email}
-      onChange={handleChange}
+        required
+        id='email'
+        className='form__input'
+        minLength='2'
+        type='email'
+        name='email'
+        value={values.email}
+        onChange={handleChange}
       />
-      {errors.email ? (
-        <span className='form__input_error'>{errors.email}</span>
-      ) : null}
+      {errors.email ? (<span className='form__input_error'>{errors.email}</span>) : null}
       <label htmlFor='password' className='form__label'>Пароль</label>
       <input
-      required
-      id='password'
-      className='form__input form__input_password'
-      minLength='2'
-      type='password'
-      name='password'
-      value={values.password}
-      onChange={handleChange}
+        required
+        id='password'
+        className='form__input form__input_password'
+        minLength='2'
+        type='password'
+        name='password'
+        value={values.password}
+        onChange={handleChange}
       />
-      {errors.password ? (
-        <span className='form__input_error'> {errors.password}</span>
-      ) : null}
+      {errors.password ? (<span className='form__input_error'> {errors.password}</span>) : null}
       {isError ? (
         <span className='form__input_error' id='login-error'>
           {isError.message ? isError.message : submitText.errorText}
