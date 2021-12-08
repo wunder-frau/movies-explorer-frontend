@@ -4,7 +4,7 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 import Validation from '../../hooks/Validation';
 
 function Profile({
-  handleSignOut,
+  onSignOut,
   handleUpdateUser,
   isSuccess,
   isError,
@@ -88,7 +88,7 @@ function Profile({
             <button
               className="profile__link profile__link-signout"
               type="button"
-              onClick={handleSignOut}
+              onClick={onSignOut}
             >
               Выйти из аккаунта
           </button>

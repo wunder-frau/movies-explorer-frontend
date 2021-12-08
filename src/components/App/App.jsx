@@ -64,7 +64,7 @@ const App = () => {
           }
         })
         .catch((err) => {
-          handleSignOut();
+          onSignOut();
           history.push('/signin');
           console.log(err);
         });
@@ -111,14 +111,14 @@ const App = () => {
     }
   }, [isShortFilmChecked]);
 
-  const handleSignOut = () => {
+  const onSignOut = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('foundMovies');
     localStorage.removeItem('movies');
     setLoggedIn(false);
     setMovies([]);
     setCurrentUser({ email: '', name: '' });
-    history.push('/signin');
+    history.push('/');
   };
 
   const onLogin = (password, email) => {
@@ -294,7 +294,7 @@ const App = () => {
             path='/profile'
             loggedIn={jwt}
             component={Profile}
-            handleSignOut={handleSignOut}
+            onSignOut={onSignOut}
             handleUpdateUser={handleUpdateUser}
             isError={isErrorUserUpdate}
             setError={setIsErrorUserUpdate}
