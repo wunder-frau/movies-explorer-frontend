@@ -51,14 +51,13 @@ const App = () => {
   );
 
   useEffect(() => {
-    // console.log(localStorage);
+    console.log(localStorage);
     const token = localStorage.getItem('jwt');
     if (token) {
       auth
         .checkToken(token)
         .then((res) => {
           localStorage.removeItem('foundMovies');
-          setMovies([]);
           if (res.data) {
             setLoggedIn(true);
           }
@@ -73,13 +72,18 @@ const App = () => {
 
   useEffect(() => {
     if (loggedIn) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+      const token = localStorage.getItem('jwt');
+      Promise.all([mainApi.getUserInfo(token), mainApi.getMovies(token)])
         .then(([user, movies]) => {
           setCurrentUser(user.data);
-          setSavedMovies(movies.data);
-          setSavedMoviesId(movies.data.map((movie) => movie.movieId));
-          // console.log(movies.data);
-          // console.log(user.data);
+          const userSavedMovies = movies.data.filter((movie) => {
+            return movie.owner === user.data._id;
+          });
+          setSavedMovies(userSavedMovies);
+          // setSavedMoviesId(movies.data.map((movie) => movie.movieId));
+          localStorage.setItem('savedMovies', JSON.stringify(movies));
+          console.log(movies.data);
+          console.log(user.data);
         })
         .catch((e) => console.log(e));
     }
@@ -117,6 +121,9 @@ const App = () => {
     localStorage.removeItem('movies');
     setLoggedIn(false);
     setMovies([]);
+    setSavedMovies([]);
+    setFoundSavedMovies([]);
+    
     setCurrentUser({ email: '', name: '' });
     history.push('/');
   };
