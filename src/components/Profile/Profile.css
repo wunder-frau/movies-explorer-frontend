@@ -90,6 +90,14 @@
   color: #EE3465;
 }
 
+.profile__link-disabled {
+  background: grey;
+  color: wheat;
+  box-shadow: yellow 2px 2px 2px;
+  cursor: default;
+  pointer-events: none;
+}
+
 .profile__link-edit:hover {
   text-shadow:  #EE3465 2px 2px 2px;
 }

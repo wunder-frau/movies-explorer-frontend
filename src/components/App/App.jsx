@@ -58,6 +58,7 @@ const App = () => {
         .checkToken(token)
         .then((res) => {
           localStorage.removeItem('foundMovies');
+          setMovies([]);
           if (res.data) {
             setLoggedIn(true);
           }
@@ -80,8 +81,8 @@ const App = () => {
             return movie.owner === user.data._id;
           });
           setSavedMovies(userSavedMovies);
-          // setSavedMoviesId(movies.data.map((movie) => movie.movieId));
-          localStorage.setItem('savedMovies', JSON.stringify(movies));
+          setSavedMoviesId(movies.data.map((movie) => movie.movieId));
+          localStorage.setItem('savedMovies', JSON.stringify(movies.data));
           console.log(movies.data);
           console.log(user.data);
         })

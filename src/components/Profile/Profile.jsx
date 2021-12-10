@@ -10,25 +10,29 @@ function Profile({
   isError,
   setSuccess,
   setError,
+  isFormSent,
 }) {
   const { name, email } = useContext(CurrentUserContext);
-  const { values, handleChange } = Validation({
+  const { values, handleChange, isValid } = Validation({
     name, email
   });
 
   const [hasChanges, setHasChanges] = useState(false);
 
   useEffect(() => {
-    setHasChanges(!(values.name === name) || !(values.email === email));
+    setHasChanges(values.name === name || values.email === email);
   }, [values.name, values.email, name, email]);
 
   const onEditSubmit = (evt) => {
-    evt.preventDefault();
+
     setSuccess('');
     setError('');
     const { name, email } = values;
     handleUpdateUser({ name, email });
+    evt.target.reset()
   };
+
+
 
   return (
     <section className='profile'>
@@ -64,6 +68,7 @@ function Profile({
               autoComplete="off"
               minLength="2"
               maxLength="40"
+              pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
               required
             />
           </label>
@@ -78,11 +83,11 @@ function Profile({
                 При обновлении профиля произошла ошибка.
               </span>
             ) : null}
-            <button
-              className="profile__link profile__link-edit"
-              type="submit"
-              disabled={!hasChanges}
-            >
+
+        <button
+        className={`profile__link ${isValid && !isFormSent ? 'profile__link-edit' : 'profile__link-disabled'}`}
+        type={isValid && !isFormSent ? 'submit' : 'button'} disabled={!hasChanges}>
+
               Редактировать
             </button>
             <button
