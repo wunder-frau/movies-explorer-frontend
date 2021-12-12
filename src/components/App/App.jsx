@@ -171,7 +171,7 @@ const App = () => {
       .then((data) => {
         setCurrentUser(data.data);
         setIsUpdateSuccessful(true);
-        setProfileError('Обновление успешно');
+        setProfileError('Ваш профиль успешно обновился!');
       })
       .catch((err) => {
         console.log(err);

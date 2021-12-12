@@ -14,7 +14,7 @@ function Profile({
   profileError,
 }) {
   const { name, email } = useContext(CurrentUserContext);
-  const { values, handleChange, isValid } = Validation({
+  const { values, handleChange, errors, isValid } = Validation({
     name, email
   });
 
@@ -31,10 +31,7 @@ function Profile({
     setError('');
     const { name, email } = values;
     handleUpdateUser({ name, email });
-    evt.target.reset();
   };
-  
-
 
   return (
     <section className='profile'>
@@ -53,10 +50,12 @@ function Profile({
               autoFocus
               autoComplete="off"
               type="text"
+              pattern='[а-яА-Яa-zAz-ёЁ\- ]{1,}'
               minLength="2"
               maxLength="40"
               required/>
           </label>
+          {errors.name ? (<span className='form__input_error'>{errors.name}</span>) : null}
           <label className='profile__label' htmlFor='email'>
             Почта
             <input
@@ -74,6 +73,7 @@ function Profile({
               required
             />
           </label>
+          {errors.email ? (<span className='form__input_error'>{errors.email}</span>) : null}
 
             {isSuccess ? (
               <span className="profile__error">
