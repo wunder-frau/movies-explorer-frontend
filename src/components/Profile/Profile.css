@@ -62,6 +62,7 @@
 }
 
 .profile__error {
+  display: block;
   text-align: center;
   margin: 0 auto;
   text-shadow:  #EE3465 2px 2px 2px;
@@ -96,6 +97,10 @@
   box-shadow: yellow 2px 2px 2px;
   cursor: default;
   pointer-events: none;
+}
+
+.profile__error-none {
+  display: none;
 }
 
 .profile__link-edit:hover {

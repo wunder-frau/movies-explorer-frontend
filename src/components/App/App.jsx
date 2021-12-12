@@ -35,15 +35,18 @@ const App = () => {
   const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
-  const [isRadioChecked, setIsRadioChecked] = useState(false);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
   const [savedMoviesId, setSavedMoviesId] = useState([]);
   const [isNotFound, setIsNotFound] = useState(false);
   const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
   const [usedKey, setUsedKey] = useState('');
   const [isFormSent, setIsFormSent] = useState(false);
+
+  const [isRadioChecked, setIsRadioChecked] = useState(false);
   const [isShortSavedFilmChecked, setIsShortSavedFilmChecked] = useState(false);
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
+
+  const [profileError, setProfileError] = useState('');
   const [movies, setMovies] = useState(
     localStorage.getItem('foundMovies')
       ? JSON.parse(localStorage.getItem('foundMovies'))
@@ -77,9 +80,7 @@ const App = () => {
       Promise.all([mainApi.getUserInfo(token), mainApi.getMovies(token)])
         .then(([user, movies]) => {
           setCurrentUser(user.data);
-          const userSavedMovies = movies.data.filter((movie) => {
-            return movie.owner === user.data._id;
-          });
+          const userSavedMovies = movies.data.filter((movie) => (movie.owner === user.data._id));
           setSavedMovies(userSavedMovies);
           setSavedMoviesId(movies.data.map((movie) => movie.movieId));
           localStorage.setItem('savedMovies', JSON.stringify(movies.data));
@@ -96,6 +97,8 @@ const App = () => {
 
   useEffect(() => {
     setIsUpdateSuccessful(false);
+    setIsShortFilmChecked(false);
+    setIsShortSavedFilmChecked(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -169,6 +172,7 @@ const App = () => {
       .then((data) => {
         setCurrentUser(data.data);
         setIsUpdateSuccessful(true);
+        setProfileError('Обновление успешно');
       })
       .catch((err) => {
         console.log(err);
@@ -180,19 +184,8 @@ const App = () => {
   };
 
   const handleSearchShortMovies = () => {
-    const isShort = isShortFilmChecked;
     const cards = JSON.parse(localStorage.getItem('foundMovies'));
-    const shortCards = cards.filter((movie) => {
-      if (isShort) {
-        if (movie.duration < 40) {
-          return true;
-        }
-      } else {
-        if (movie.duration >= 40) {
-          return true;
-        }
-      }
-    });
+    const shortCards = cards.filter((movie) => (!isShortFilmChecked || isShortFilmChecked && movie.duration < 40));
     setMovies(shortCards);
     setIsNotFound(!shortCards.length);
   };
@@ -208,8 +201,7 @@ const App = () => {
         localStorage.setItem('movies', JSON.stringify(films));
         movies = JSON.parse(localStorage.getItem('movies'));
       }
-      const cards = Search(movies, searchValue);
-      localStorage.setItem('foundMovies', JSON.stringify(cards));
+      localStorage.setItem('foundMovies', JSON.stringify(Search(movies, searchValue)));
       handleSearchShortMovies();
     } catch (err) {
       console.error(err);
@@ -220,17 +212,11 @@ const App = () => {
   };
 
   const handleSearchSavedMovies = (searchValue) => {
-    setIsRadioChecked(false);
-    if (!searchValue) {
-      setIsRadioChecked(true);
-    }
+    setIsRadioChecked(!searchValue);
     setUsedKey(searchValue);
-    const movies = Search(
-      savedMovies,
-      searchValue,
-      isShortSavedFilmChecked
+    setFoundSavedMovies(
+      Search(savedMovies, searchValue, isShortSavedFilmChecked)
     );
-    setFoundSavedMovies(movies);
   };
 
   function handleSaveMovie(movie) {
@@ -239,7 +225,14 @@ const App = () => {
       .then((movie) => {
         setSavedMoviesId([...savedMoviesId, movie.data.id]);
         setSavedMovies([...savedMovies, movie.data]);
-      })
+      
+      if (isShortSavedFilmChecked) {
+        setSavedMoviesId([...savedMoviesId, movie.data.id]);
+        setSavedMovies([...savedMovies, movie.data]);
+      } else {
+        setSavedMoviesId([...savedMoviesId, movie.data.id]);
+      }
+    })
       .catch((err) => { console.error(err); });
   };
 
@@ -310,6 +303,8 @@ const App = () => {
             isFormSent={isFormSent}
             setIsFormSent={setIsFormSent}
             setSuccess={setIsUpdateSuccessful}
+            profileError={profileError}
+            setProfileError={setProfileError}
           />
           <Route exact path='/signin'>
             {!loggedIn ? (

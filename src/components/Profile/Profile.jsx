@@ -11,6 +11,7 @@ function Profile({
   setSuccess,
   setError,
   isFormSent,
+  profileError,
 }) {
   const { name, email } = useContext(CurrentUserContext);
   const { values, handleChange, isValid } = Validation({
@@ -24,14 +25,15 @@ function Profile({
   }, [values.name, values.email, name, email]);
 
   const onEditSubmit = (evt) => {
-
+    evt.preventDefault();
+    setHasChanges(false);
     setSuccess('');
     setError('');
     const { name, email } = values;
     handleUpdateUser({ name, email });
-    evt.target.reset()
+    evt.target.reset();
   };
-
+  
 
 
   return (
@@ -73,29 +75,29 @@ function Profile({
             />
           </label>
 
-          {isSuccess ? (
+            {isSuccess ? (
               <span className="profile__error">
-                Ваш профиль успешно обновился!
+                {profileError}
               </span>
             ) : null}
+
             {isError ? (
               <span className="profile__error">
                 При обновлении профиля произошла ошибка.
               </span>
             ) : null}
 
-        <button
-        className={`profile__link ${isValid && !isFormSent ? 'profile__link-edit' : 'profile__link-disabled'}`}
-        type={isValid && !isFormSent ? 'submit' : 'button'} disabled={!hasChanges}>
-
-              Редактировать
-            </button>
-            <button
-              className="profile__link profile__link-signout"
-              type="button"
-              onClick={onSignOut}
-            >
-              Выйти из аккаунта
+          <button
+            className={`profile__link profile__link-edit ${!isValid && !isFormSent ? 'profile__link-disabled' : ''}`}
+            type='submit' disabled={!hasChanges}>
+            Редактировать
+          </button>
+          <button
+            className="profile__link profile__link-signout"
+            onClick={onSignOut}
+            type="button"
+          >
+            Выйти из аккаунта
           </button>
         </form>
       </div>

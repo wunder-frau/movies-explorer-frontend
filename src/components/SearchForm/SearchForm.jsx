@@ -4,20 +4,19 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import Validation from '../../hooks/Validation';
 
 function SearchForm({ handleSubmit, handleChangeRadio }) {
-  const { values, handleChange, errors, isValid } = Validation({
-    key: '',
-  });
-  const [searchError, setsearchError] = useState('');
+  const { values, handleChange, errors, isValid } = Validation({key: '',});
+
+  const [searchError, setSearchError] = useState('');
 
   function handleSearchSubmit(evt) {
     evt.preventDefault();
     if (isValid) {
-      setsearchError('');
+      setSearchError('');
       handleSubmit(values.key);
     } else if (values.key.length > 0) {
-      setsearchError(errors.key);
+      setSearchError(errors.key);
     } else {
-      setsearchError('Нужно ввести ключевое слово');
+      setSearchError('Нужно ввести ключевое слово');
     }
   }
 

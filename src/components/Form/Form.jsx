@@ -46,11 +46,8 @@ function Form({
         </span>
       ) : null}
       <button
-        className={`form__button ${
-          isValid && !isFormSent ? '' : 'form__button_disabled'
-        }`}
-        type={isValid && !isFormSent ? 'submit' : 'button'}
-      >
+        className={`form__button ${isValid && !isFormSent ? '' : 'form__button_disabled'}`}
+        type={isValid && !isFormSent ? 'submit' : 'button'}>
         {submitText.buttonText}
       </button>
 
