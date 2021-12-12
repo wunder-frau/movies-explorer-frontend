@@ -24,6 +24,7 @@ function Form({
         minLength='2'
         type='email'
         name='email'
+        pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
         value={values.email}
         onChange={handleChange}
       />

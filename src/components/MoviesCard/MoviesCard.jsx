@@ -10,19 +10,18 @@ const MoviesCard = ({
   handleSaveMovie
 }) => {
   const findInSaved = (movie) => {
-    if (movie.id)
-      return savedMoviesId.some((savedMovie) => savedMovie === String(movie.id));
+    return movie.id ? savedMoviesId.some((savedMovieId) => savedMovieId === String(movie.id)) : false;
   };
   const [isLiked, setIsLiked] = useState(findInSaved(movie));
 
   const hours = Math.trunc(movie.duration / duration);
   const minutes = movie.duration % duration;
-  const time = `${hours > 0 ? hours + 'ч ' : ''}${
-    minutes > 0 ? minutes + 'м' : ''
-  }`;
+  const time = `${hours > 0 ? hours + 'ч ' : ''}${minutes > 0 ? minutes + 'м' : ''}`;
   const trailer = `${isSaved ? movie.trailer : movie.trailerLink}`;
 
   function handleSave(evt) {
+    console.log(movie)
+    console.log(savedMoviesId)
     if (isSaved || isLiked) {
       deleteMovie(movie);
       setIsLiked(!isLiked);
@@ -35,28 +34,21 @@ const MoviesCard = ({
 
   return (
     <li className='movies-card'>
-    <div className='movies-card__wrap'>
-      <a
-          href={
-            trailer.startsWith('https') ? trailer : 'https://www.youtube.com'
-          }
+      <div className='movies-card__wrap'>
+        <a
+          href={trailer.startsWith('https') ? trailer : 'https://www.youtube.com'}
           target='_blank'
           rel='noreferrer'
-        >
-        <img
-          className='movies-card__image'
-          src={
-            isSaved
-              ? movie.image
-              : `https://api.nomoreparties.co${movie.image.url}`
-          }
-          alt={movie.name}
-        />
-      </a>
-    </div>
-    <div className='movies-card__description'>
-      <p className='movies-card__name'>{movie.nameRU}</p>
-      <p className='movies-card__duration'>{time}</p>
+        ><img
+            className='movies-card__image'
+            src={isSaved ? movie.image : `https://api.nomoreparties.co${movie.image.url}`}
+            alt={movie.name}
+          />
+        </a>
+      </div>
+      <div className='movies-card__description'>
+        <p className='movies-card__name'>{movie.nameRU}</p>
+        <p className='movies-card__duration'>{time}</p>
         {isSaved && (
           <button
             aria-label="delete"
@@ -73,9 +65,9 @@ const MoviesCard = ({
             className={isLiked ? 'movies-card__like movies-card__like_added' : 'movies-card__like'}
           />
         )}
-    </div>
-  </li>
-);
+      </div>
+    </li>
+  );
 }
 
 export default MoviesCard;

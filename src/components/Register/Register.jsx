@@ -37,7 +37,7 @@ function Register({
       </Link>
       <h2 className='register__title'>Добро пожаловать!</h2>
 
-      <span className='form__input_error'>{errors.name}</span>
+      {/* <span className=''>{errors.name}</span> */}
         <Form
           submitText={{
             buttonText: 'Зарегистрироваться',
@@ -66,6 +66,7 @@ function Register({
             autoFocus
             autoComplete='off'
             className='form__input'
+            pattern='[а-яА-Яa-zA-ZёË\- ]{1,}'
             type='text'
             minLength='2'
             maxLength='40'

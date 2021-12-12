@@ -82,10 +82,8 @@ const App = () => {
           setCurrentUser(user.data);
           const userSavedMovies = movies.data.filter((movie) => (movie.owner === user.data._id));
           setSavedMovies(userSavedMovies);
-          setSavedMoviesId(movies.data.map((movie) => movie.movieId));
-          localStorage.setItem('savedMovies', JSON.stringify(movies.data));
-          console.log(movies.data);
-          console.log(user.data);
+          setSavedMoviesId(userSavedMovies.map((movie) => movie.movieId));
+          localStorage.setItem('savedMovies', JSON.stringify(userSavedMovies));
         })
         .catch((e) => console.log(e));
     }
@@ -122,6 +120,7 @@ const App = () => {
   const onSignOut = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('foundMovies');
+    localStorage.removeItem('savedMovies');
     localStorage.removeItem('movies');
     setLoggedIn(false);
     setMovies([]);
@@ -225,13 +224,6 @@ const App = () => {
       .then((movie) => {
         setSavedMoviesId([...savedMoviesId, movie.data.id]);
         setSavedMovies([...savedMovies, movie.data]);
-      
-      if (isShortSavedFilmChecked) {
-        setSavedMoviesId([...savedMoviesId, movie.data.id]);
-        setSavedMovies([...savedMovies, movie.data]);
-      } else {
-        setSavedMoviesId([...savedMoviesId, movie.data.id]);
-      }
     })
       .catch((err) => { console.error(err); });
   };
