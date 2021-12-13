@@ -216,7 +216,22 @@ const App = () => {
     setFoundSavedMovies(
       Search(savedMovies, searchValue, isShortSavedFilmChecked)
     );
+    setFoundSavedMovies(movies);
   };
+
+  // const handleSearchSavedMovies = (searchValue) => {
+  //   setIsOnlyCheckedSearch(false);
+  //   if (!searchValue) {
+  //     setIsOnlyCheckedSearch(true);
+  //   }
+  //   setSavedKeyWord(searchValue);
+  //   const movies = searchMovies(
+  //     savedMovies,
+  //     searchValue,
+  //     isShortSavedFilmChecked
+  //   );
+  //   setFoundSavedMovies(movies);
+  // };
 
   function handleSaveMovie(movie) {
     mainApi
