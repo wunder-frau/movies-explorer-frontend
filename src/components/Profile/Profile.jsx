@@ -21,16 +21,17 @@ function Profile({
   const [hasChanges, setHasChanges] = useState(false);
 
   useEffect(() => {
-    setHasChanges(values.name === name || values.email === email);
+    setHasChanges(!(values.name === name) || !(values.email === email));
   }, [values.name, values.email, name, email]);
+
 
   const onEditSubmit = (evt) => {
     evt.preventDefault();
-    setHasChanges(false);
     setSuccess('');
     setError('');
     const { name, email } = values;
     handleUpdateUser({ name, email });
+    evt.target.reset()
   };
 
   return (
@@ -83,15 +84,18 @@ function Profile({
 
             {isError ? (
               <span className="profile__error">
-                При обновлении профиля произошла ошибка.
+                  {profileError}
               </span>
             ) : null}
 
           <button
-            className={`profile__link profile__link-edit ${!isValid && !isFormSent ? 'profile__link-disabled' : ''}`}
-            type='submit' disabled={!hasChanges}>
+            className="profile__link-disabled"
+            type="submit"
+            disabled={!hasChanges || !isValid}
+          >
             Редактировать
           </button>
+
           <button
             className="profile__link profile__link-signout"
             onClick={onSignOut}

@@ -175,7 +175,7 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
-        setIsErrorUserUpdate(err);
+        setProfileError('При обновлении профиля произошла ошибка.');
       })
       .finally(() => {
         setIsFormSent(false);
