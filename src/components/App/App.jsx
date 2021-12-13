@@ -216,7 +216,9 @@ const App = () => {
     setFoundSavedMovies(
       Search(savedMovies, searchValue, isShortSavedFilmChecked)
     );
-    setFoundSavedMovies(movies);
+    console.log(savedMovies);
+    console.log(searchValue);
+    console.log(isShortSavedFilmChecked)
   };
 
   // const handleSearchSavedMovies = (searchValue) => {

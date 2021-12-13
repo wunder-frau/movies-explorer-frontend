@@ -104,6 +104,7 @@
   font-weight: 400;
   line-height: 15px;
 }
+
 .profile__link-disabled:disabled {
   background: grey;
   color: wheat;
