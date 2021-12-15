@@ -36,10 +36,10 @@
   transition: all .3s;
 }
 
-.movies-card__like_added:hover {
+/* .movies-card__like_added:hover {
   background-image: url('../../images/close.svg');
   transition: all .3s;
-}
+} */
 
 .movies-card:hover .movies-card__like {
   display: block;

@@ -17,7 +17,7 @@ const MoviesCardList = ({
   useEffect(() => {
     const newMovies = movies.slice(0, moviesCount().count);
     setFiltredMovies(newMovies);
-  }, [movies, windowSize]);
+  }, [movies.length, windowSize]);
 
   function debounce(fn, ms) {
     let timer;
@@ -29,6 +29,7 @@ const MoviesCardList = ({
       }, ms);
     };
   }
+
   useEffect(() => {
     const debouncedHandleResize = debounce(function handleResize() {
       setWindowSize(window.innerWidth);

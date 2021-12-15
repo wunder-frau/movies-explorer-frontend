@@ -9,26 +9,21 @@ const MoviesCard = ({
   deleteMovie,
   handleSaveMovie
 }) => {
-  const findInSaved = (movie) => {
-    return movie.id ? savedMoviesId.some((savedMovieId) => savedMovieId === String(movie.id)) : false;
-  };
-  const [isLiked, setIsLiked] = useState(findInSaved(movie));
-
   const hours = Math.trunc(movie.duration / duration);
   const minutes = movie.duration % duration;
   const time = `${hours > 0 ? hours + 'ч ' : ''}${minutes > 0 ? minutes + 'м' : ''}`;
+
   const trailer = `${isSaved ? movie.trailer : movie.trailerLink}`;
 
+  const isLiked = savedMoviesId && savedMoviesId.some(savedMovieId => savedMovieId === String(movie.id));
   function handleSave(evt) {
-    console.log(movie)
-    console.log(savedMoviesId)
     if (isSaved || isLiked) {
       deleteMovie(movie);
-      setIsLiked(!isLiked);
+      isLiked = !isLiked;
     } else if (!isSaved) {
       handleSaveMovie(movie);
       savedMoviesId.push(String(movie.id));
-      setIsLiked(!isLiked);
+      isLiked = !isLiked;
     }
   }
 
