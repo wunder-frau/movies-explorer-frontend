@@ -71,27 +71,26 @@ const App = () => {
     : []
   );
   useEffect(() => {
-    if (movies.length)
-      localStorage.setItem('movies', JSON.stringify(movies));
-    else
+    localStorage.setItem('movies', JSON.stringify(movies));
+    if (!loggedIn)
       localStorage.removeItem('movies');
   }, [movies]);
 
-  // ---- /movies
-
-  const [cards, setCards] = useState(localStorage.getItem('cards') ? JSON.parse(localStorage.getItem('cards')) : []);
   const [savedMovies, setSavedMovies] = useState(
     localStorage.getItem('savedMovies')
     ? JSON.parse(localStorage.getItem('savedMovies'))
     : []
   );
   useEffect(() => {
-    if (savedMovies.length)
-      localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
-    else
-      localStorage.removeItem('savedMovies')
+    setSavedCards(savedMovies);
+    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+    if (!loggedIn)
+      localStorage.removeItem('savedMovies');
   }, [savedMovies]);
 
+  // ---- /movies
+
+  const [cards, setCards] = useState(localStorage.getItem('cards') ? JSON.parse(localStorage.getItem('cards')) : []);
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
   useEffect(() => {
     if (localStorage.getItem('cards'))
@@ -100,13 +99,13 @@ const App = () => {
 
   // ---- /saved-movies
 
+  const [savedCards, setSavedCards] = useState([]);
   const [isShortSavedFilmChecked, setIsShortSavedFilmChecked] = useState(false);
   useEffect(() => {
-    if (savedMovies.length || foundSavedMovies.length)
+    if (savedMovies.length || savedCards.length)
       handleSearchSavedMovies(usedKey);
   }, [isShortSavedFilmChecked]);
 
-  const [foundSavedMovies, setFoundSavedMovies] = useState([]);
 
   // ---- Account
 
@@ -145,14 +144,13 @@ const App = () => {
   };
 
   const onSignOut = () => {
+    setLoggedIn(false);
+
     setMovies([]);
     setSavedMovies([]);
-    setFoundSavedMovies([]);
     setCurrentUser({ email: '', name: '' });
     localStorage.removeItem('jwt');
     localStorage.removeItem('cards');
-
-    setLoggedIn(false);
 
     history.push('/');
   };
@@ -210,7 +208,7 @@ const App = () => {
   const handleSearchSavedMovies = (searchValue) => {
     setIsRadioChecked(!searchValue);
     setUsedKey(searchValue);
-    setFoundSavedMovies(Search(savedMovies, searchValue, isShortSavedFilmChecked));
+    setSavedCards(Search(savedMovies, searchValue, isShortSavedFilmChecked));
   };
 
   const handleSaveMovie = (movie) => {
@@ -255,8 +253,8 @@ const App = () => {
         });
     }
 
-    setSavedMovies(savedMovies);
-    setFoundSavedMovies(savedMovies);
+    // setSavedMovies(savedMovies);
+    // setSavedCards(savedMovies);
   });
 
   return (
@@ -289,8 +287,8 @@ const App = () => {
             component={SavedMovies}
             movies={
               usedKey || isRadioChecked
-                ? foundSavedMovies.length
-                  ? foundSavedMovies
+                ? savedCards.length
+                  ? savedCards
                   : 'NotFound'
                 : savedMovies
             }
