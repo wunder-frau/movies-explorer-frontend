@@ -31,6 +31,8 @@ const App = () => {
     setIsUpdateSuccessful(false);
     setIsShortFilmChecked(false);
     setIsShortSavedFilmChecked(false);
+
+
   }, [pathname]);
 
   const [isErrorReg, setIsErrorReg] = useState('');
@@ -68,7 +70,12 @@ const App = () => {
     ? JSON.parse(localStorage.getItem('movies'))
     : []
   );
-  useEffect(() => { localStorage.setItem('movies', JSON.stringify(movies)); }, [movies]);
+  useEffect(() => {
+    if (movies.length)
+      localStorage.setItem('movies', JSON.stringify(movies));
+    else
+      localStorage.removeItem('movies');
+  }, [movies]);
 
   // ---- /movies
 
@@ -78,7 +85,12 @@ const App = () => {
     ? JSON.parse(localStorage.getItem('savedMovies'))
     : []
   );
-  useEffect(() => { localStorage.setItem('savedMovies', JSON.stringify(savedMovies)); }, [savedMovies]);
+  useEffect(() => {
+    if (savedMovies.length)
+      localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+    else
+      localStorage.removeItem('savedMovies')
+  }, [savedMovies]);
 
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
   useEffect(() => {
@@ -137,15 +149,14 @@ const App = () => {
     setSavedMovies([]);
     setFoundSavedMovies([]);
     setCurrentUser({ email: '', name: '' });
-
     localStorage.removeItem('jwt');
     localStorage.removeItem('cards');
-    localStorage.removeItem('savedMovies');
-    localStorage.removeItem('movies');
 
     setLoggedIn(false);
+
     history.push('/');
   };
+
 
   const handleUpdateUser = (userInfo) => {
     mainApi
@@ -172,12 +183,10 @@ const App = () => {
     setIsNotFound(false);
 
     try {
-      if (!movies.length) {
-        const recievedMovies = await getMovies();
-        setMovies(recievedMovies);
-      }
+      const recievedMovies = (!movies.length) ? await getMovies() : movies;
+      setMovies(recievedMovies);
 
-      const foundMovies = Search(movies, searchValue);
+      const foundMovies = Search(recievedMovies, searchValue);
       setCards(foundMovies);
       localStorage.setItem('cards', JSON.stringify(foundMovies));
 
@@ -245,7 +254,10 @@ const App = () => {
           console.log(err);
         });
     }
-  }, []);
+
+    setSavedMovies(savedMovies);
+    setFoundSavedMovies(savedMovies);
+  });
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

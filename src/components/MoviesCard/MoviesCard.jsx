@@ -1,4 +1,4 @@
-import { React, useState, useContext, useEffect } from 'react';
+import { React, useState, pathname, useEffect } from 'react';
 import './MoviesCard.css';
 import { duration } from '../../utils/constatns';
 
@@ -19,13 +19,22 @@ const MoviesCard = ({
   function handleSave(evt) {
     if (isSaved || isLiked) {
       deleteMovie(movie);
-      isLiked = !isLiked;
+      setIsLike(!isLike);
     } else if (!isSaved) {
       handleSaveMovie(movie);
       savedMoviesId.push(String(movie.id));
-      isLiked = !isLiked;
+      setIsLike(!isLike);
     }
   }
+
+  const [isLike, setIsLike] = useState(false);
+  useEffect(() => {
+    if (isLiked) {
+      setIsLike(!isLike);
+    }
+  });
+
+
 
   return (
     <li className='movies-card'>
