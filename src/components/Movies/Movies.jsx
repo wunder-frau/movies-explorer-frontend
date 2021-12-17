@@ -8,7 +8,7 @@ const Movies = (props) => {
   return (
     <section className="movies">
       <Preloader /> 
-      <SearchForm handleSubmit={props.handleSubmit} handleChangeRadio={props.handleChange}/>
+      <SearchForm handleSubmit={props.handleSubmit} handleChangeRadio={props.handleChange} defaultChecked={props.defaultChecked}/>
       {props.isLoading ? <Preloader /> : null}
       {props.isNotFound ? (<p className="movies__found-error">Ничего не найдено</p>) : null}
       {props.isError ? (

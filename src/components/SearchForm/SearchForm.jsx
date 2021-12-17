@@ -3,7 +3,7 @@ import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import Validation from '../../hooks/Validation';
 
-function SearchForm({ handleSubmit, handleChangeRadio }) {
+function SearchForm({ handleSubmit, handleChangeRadio, defaultChecked }) {
   const { values, handleChange, errors, isValid } = Validation({key: '',});
 
   const [searchError, setSearchError] = useState('');
@@ -41,7 +41,7 @@ function SearchForm({ handleSubmit, handleChangeRadio }) {
           <span className='searchform__error' id='key-input-error'>
               {searchError}
             </span>
-          <FilterCheckbox filterText='Короткометражки' handleChangeRadio={handleChangeRadio} />
+          <FilterCheckbox filterText='Короткометражки' handleChangeRadio={handleChangeRadio} defaultChecked={defaultChecked} />
         </form>
         <button type='submit' onClick={handleSearchSubmit} className='search-form__submit'>Найти</button>
       </div>

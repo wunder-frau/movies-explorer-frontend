@@ -2,12 +2,11 @@ import React from 'react';
 import { useRef } from "react";
 import './FilterCheckbox.css'
 
-const FilterCheckbox = ({ handleChangeRadio }) => {
+const FilterCheckbox = ({ handleChangeRadio, defaultChecked }) => {
   const checked = useRef();
   function handleChange() {
     handleChangeRadio(checked.current.checked);
   };
-
 
   return (
     <div className='filter-checkbox'>
@@ -18,7 +17,7 @@ const FilterCheckbox = ({ handleChangeRadio }) => {
           ref={checked}
           id="shortfilm"
           onChange={handleChange}
-          defaultChecked={false}
+          defaultChecked={defaultChecked}
         />
         <span className='filter-checkbox__round'/>
       </label>

@@ -29,10 +29,8 @@ const App = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     setIsUpdateSuccessful(false);
-    setIsShortFilmChecked(false);
-    setIsShortSavedFilmChecked(false);
-
-
+    // setIsShortFilmChecked(false);
+    // setIsShortSavedFilmChecked(false);
   }, [pathname]);
 
   const [isErrorReg, setIsErrorReg] = useState('');
@@ -61,6 +59,9 @@ const App = () => {
           setSavedMoviesId(userSavedMovies.map((movie) => movie.movieId));
         })
         .catch((e) => console.log(e));
+    } else {
+      localStorage.removeItem('isShortFilmChecked');
+      localStorage.removeItem('isShortSavedFilmChecked');
     }
     setIsNotFound(false);
   }, [loggedIn]);
@@ -91,8 +92,16 @@ const App = () => {
   // ---- /movies
 
   const [cards, setCards] = useState(localStorage.getItem('cards') ? JSON.parse(localStorage.getItem('cards')) : []);
-  const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
+  const [isShortFilmChecked, setIsShortFilmChecked] = useState(
+    localStorage.getItem('isShortFilmChecked')
+    ? localStorage.getItem('isShortFilmChecked')
+    : false
+  );
   useEffect(() => {
+    localStorage.setItem('isShortFilmChecked', isShortFilmChecked);
+    if (!loggedIn)
+      localStorage.removeItem('isShortFilmChecked');
+
     if (localStorage.getItem('cards'))
       handleSearchShortMovies();
   }, [isShortFilmChecked]);
@@ -100,8 +109,16 @@ const App = () => {
   // ---- /saved-movies
 
   const [savedCards, setSavedCards] = useState([]);
-  const [isShortSavedFilmChecked, setIsShortSavedFilmChecked] = useState(false);
+  const [isShortSavedFilmChecked, setIsShortSavedFilmChecked] = useState(
+    localStorage.getItem('isShortSavedFilmChecked')
+    ? localStorage.getItem('isShortSavedFilmChecked')
+    : false
+  );
   useEffect(() => {
+    localStorage.setItem('isShortSavedFilmChecked', isShortSavedFilmChecked);
+    if (!loggedIn)
+      localStorage.removeItem('isShortSavedFilmChecked');
+
     if (savedMovies.length || savedCards.length)
       handleSearchSavedMovies(usedKey);
   }, [isShortSavedFilmChecked]);
@@ -279,6 +296,7 @@ const App = () => {
             handleSaveMovie={handleSaveMovie}
             deleteMovie={deleteMovie}
             handleChange={setIsShortFilmChecked}
+            defaultChecked={isShortFilmChecked}
           />
           <ProtectedRoute
             exact
@@ -295,6 +313,7 @@ const App = () => {
             deleteMovie={deleteMovie}
             handleSubmit={handleSearchSavedMovies}
             handleChange={setIsShortSavedFilmChecked}
+            defaultChecked={isShortSavedFilmChecked}
           />
           <ProtectedRoute
             path='/profile'

@@ -7,6 +7,7 @@ function SavedMovies(props) {
       <SearchForm
         handleSubmit={props.handleSubmit}
         handleChangeRadio={props.handleChange}
+        defaultChecked={props.defaultChecked}
       />
       {props.movies === "NotFound" ? (<p className="movies__found-error">Ничего не найдено</p>) : null}
       <MoviesCardList {...props} isSaved={true} />
