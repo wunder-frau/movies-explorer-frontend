@@ -41,7 +41,6 @@ const App = () => {
   const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
   const [profileError, setProfileError] = useState('');
   const [isFormSent, setIsFormSent] = useState(false);
-  const [isRadioChecked, setIsRadioChecked] = useState(false);
 
   const jwt = localStorage.getItem('jwt');
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('jwt') ? true : false);
@@ -57,10 +56,7 @@ const App = () => {
         })
         .catch((e) => console.log(e));
     } else {
-      localStorage.removeItem('movies');
-      localStorage.removeItem('isShortFilmChecked');
-      localStorage.removeItem('isShortSavedFilmChecked');
-      localStorage.removeItem('query');
+      localStorage.clear();
     }
     setIsNotFound(false);
   }, [loggedIn]);
@@ -188,8 +184,6 @@ const App = () => {
 
     setMovies([]);
     setSavedMovies([]);
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('cards');
 
     history.push('/');
   };
@@ -247,7 +241,6 @@ const App = () => {
   };
 
   const handleSearchSavedMovies = (query) => {
-    setIsRadioChecked(!query);
     setSavedMoviesQuery(query);
     setSavedCards(Search(savedMovies, query, isShortSavedFilmChecked));
   };
@@ -326,11 +319,9 @@ const App = () => {
             loggedIn={jwt}
             component={SavedMovies}
             movies={
-              savedMoviesQuery || isRadioChecked
-                ? savedCards.length
-                  ? savedCards
-                  : 'NotFound'
-                : savedMovies
+              savedMoviesQuery || isShortSavedFilmChecked
+              ? (savedCards.length ? savedCards : 'NotFound')
+              : savedMovies
             }
             deleteMovie={deleteMovie}
             handleSubmit={handleSearchSavedMovies}
