@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import Validation from '../../hooks/Validation';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function SearchForm({ handleSubmit, handleChangeRadio, defaultChecked }) {
-  const { values, handleChange, errors, isValid } = Validation({key: '',});
+  const { key } = useContext(CurrentUserContext);
+  const { values, handleChange, errors, isValid } = Validation({key: localStorage.getItem('searchValue'),});
 
   const [searchError, setSearchError] = useState('');
 

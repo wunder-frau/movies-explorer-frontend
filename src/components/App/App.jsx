@@ -62,6 +62,7 @@ const App = () => {
     } else {
       localStorage.removeItem('isShortFilmChecked');
       localStorage.removeItem('isShortSavedFilmChecked');
+      localStorage.removeItem('searchValue');
     }
     setIsNotFound(false);
   }, [loggedIn]);
@@ -105,6 +106,14 @@ const App = () => {
     if (localStorage.getItem('cards'))
       handleSearchShortMovies();
   }, [isShortFilmChecked]);
+
+
+  // const [searchValue, setSerchValue] = useState(localStorage.getItem('searchValue'), searchValue);
+  // useEffect(() => {
+  //   localStorage.setItem('searchValue', searchValue);
+  //   if (!loggedIn)
+  //     localStorage.removeItem('searchValue');
+  // }, [setSerchValue]);
 
   // ---- /saved-movies
 
@@ -205,7 +214,7 @@ const App = () => {
       const foundMovies = Search(recievedMovies, searchValue);
       setCards(foundMovies);
       localStorage.setItem('cards', JSON.stringify(foundMovies));
-
+      localStorage.setItem('searchValue', searchValue);
       handleSearchShortMovies();
     } catch (err) {
       console.error(err);
@@ -226,6 +235,7 @@ const App = () => {
   const handleSearchSavedMovies = (searchValue) => {
     setIsRadioChecked(!searchValue);
     setUsedKey(searchValue);
+    localStorage.setItem('searchValue', searchValue);
     setSavedCards(Search(savedMovies, searchValue, isShortSavedFilmChecked));
   };
 
