@@ -131,6 +131,7 @@ const App = () => {
       .register(password, email, name)
       .then(() => {
         onLogin(password, email);
+        history.push('/movies');
       })
       .catch((err) => {
         console.log(err);
@@ -269,10 +270,7 @@ const App = () => {
           console.log(err);
         });
     }
-
-    // setSavedMovies(savedMovies);
-    // setSavedCards(savedMovies);
-  });
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
