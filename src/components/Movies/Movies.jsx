@@ -12,6 +12,8 @@ const Movies = (props) => {
         handleSubmit={props.handleSubmit}
         handleChangeRadio={props.handleChange}
         defaultChecked={props.defaultChecked}
+        query={props.query}
+        handleSaveSearchValue={props.handleSaveSearchValue}
       />
       {props.isLoading ? <Preloader /> : null}
       {props.isNotFound ? (<p className="movies__found-error">Ничего не найдено</p>) : null}

@@ -29,8 +29,6 @@ const App = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     setIsUpdateSuccessful(false);
-    // setIsShortFilmChecked(false);
-    // setIsShortSavedFilmChecked(false);
   }, [pathname]);
 
   const [isErrorReg, setIsErrorReg] = useState('');
@@ -41,7 +39,6 @@ const App = () => {
   const [savedMoviesId, setSavedMoviesId] = useState([]);
   const [isNotFound, setIsNotFound] = useState(false);
   const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
-  const [usedKey, setUsedKey] = useState('');
   const [profileError, setProfileError] = useState('');
   const [isFormSent, setIsFormSent] = useState(false);
   const [isRadioChecked, setIsRadioChecked] = useState(false);
@@ -60,9 +57,10 @@ const App = () => {
         })
         .catch((e) => console.log(e));
     } else {
+      localStorage.removeItem('movies');
       localStorage.removeItem('isShortFilmChecked');
       localStorage.removeItem('isShortSavedFilmChecked');
-      localStorage.removeItem('searchValue');
+      localStorage.removeItem('query');
     }
     setIsNotFound(false);
   }, [loggedIn]);
@@ -107,13 +105,27 @@ const App = () => {
       handleSearchShortMovies();
   }, [isShortFilmChecked]);
 
+  const [moviesQuery, setMoviesQuery] = useState(
+    localStorage.getItem('moviesQuery')
+    ? localStorage.getItem('moviesQuery')
+    : ''
+  );
+  useEffect(() => {
+    localStorage.setItem('moviesQuery', moviesQuery);
+    if (!loggedIn)
+      localStorage.removeItem('moviesQuery');
+  }, [moviesQuery]);
 
-  // const [searchValue, setSerchValue] = useState(localStorage.getItem('searchValue'), searchValue);
-  // useEffect(() => {
-  //   localStorage.setItem('searchValue', searchValue);
-  //   if (!loggedIn)
-  //     localStorage.removeItem('searchValue');
-  // }, [setSerchValue]);
+  const [savedMoviesQuery, setSavedMoviesQuery] = useState(
+      localStorage.getItem('savedMoviesQuery')
+      ? localStorage.getItem('savedMoviesQuery')
+      : ''
+    );
+  useEffect(() => {
+    localStorage.setItem('savedMoviesQuery', savedMoviesQuery);
+    if (!loggedIn)
+      localStorage.removeItem('savedMoviesQuery');
+  }, [savedMoviesQuery]);
 
   // ---- /saved-movies
 
@@ -129,7 +141,7 @@ const App = () => {
       localStorage.removeItem('isShortSavedFilmChecked');
 
     if (savedMovies.length || savedCards.length)
-      handleSearchSavedMovies(usedKey);
+      handleSearchSavedMovies(savedMoviesQuery);
   }, [isShortSavedFilmChecked]);
 
 
@@ -172,10 +184,10 @@ const App = () => {
 
   const onSignOut = () => {
     setLoggedIn(false);
+    setCurrentUser({ email: '', name: '' });
 
     setMovies([]);
     setSavedMovies([]);
-    setCurrentUser({ email: '', name: '' });
     localStorage.removeItem('jwt');
     localStorage.removeItem('cards');
 
@@ -202,7 +214,7 @@ const App = () => {
 
   // ---- Movies
 
-  const handleSearchMovies = async (searchValue) => {
+  const handleSearchMovies = async (query) => {
     setIsErrorSearch(false);
     setIsPreloaderLoading(true);
     setIsNotFound(false);
@@ -211,10 +223,12 @@ const App = () => {
       const recievedMovies = (!movies.length) ? await getMovies() : movies;
       setMovies(recievedMovies);
 
-      const foundMovies = Search(recievedMovies, searchValue);
+      const foundMovies = Search(recievedMovies, query);
       setCards(foundMovies);
       localStorage.setItem('cards', JSON.stringify(foundMovies));
-      localStorage.setItem('searchValue', searchValue);
+
+      setMoviesQuery(query);
+
       handleSearchShortMovies();
     } catch (err) {
       console.error(err);
@@ -232,11 +246,10 @@ const App = () => {
     setIsNotFound(!shortMoviesCards.length);
   };
 
-  const handleSearchSavedMovies = (searchValue) => {
-    setIsRadioChecked(!searchValue);
-    setUsedKey(searchValue);
-    localStorage.setItem('searchValue', searchValue);
-    setSavedCards(Search(savedMovies, searchValue, isShortSavedFilmChecked));
+  const handleSearchSavedMovies = (query) => {
+    setIsRadioChecked(!query);
+    setSavedMoviesQuery(query);
+    setSavedCards(Search(savedMovies, query, isShortSavedFilmChecked));
   };
 
   const handleSaveMovie = (movie) => {
@@ -270,9 +283,8 @@ const App = () => {
       auth
         .checkToken(jwt)
         .then((res) => {
-          if (res.data) {
+          if (res.data)
             setLoggedIn(true);
-          }
         })
         .catch((err) => {
           onSignOut();
@@ -305,6 +317,8 @@ const App = () => {
             deleteMovie={deleteMovie}
             handleChange={setIsShortFilmChecked}
             defaultChecked={isShortFilmChecked}
+            query={moviesQuery}
+            handleSaveSearchValue={setMoviesQuery}
           />
           <ProtectedRoute
             exact
@@ -312,7 +326,7 @@ const App = () => {
             loggedIn={jwt}
             component={SavedMovies}
             movies={
-              usedKey || isRadioChecked
+              savedMoviesQuery || isRadioChecked
                 ? savedCards.length
                   ? savedCards
                   : 'NotFound'
@@ -322,6 +336,8 @@ const App = () => {
             handleSubmit={handleSearchSavedMovies}
             handleChange={setIsShortSavedFilmChecked}
             defaultChecked={isShortSavedFilmChecked}
+            query={savedMoviesQuery}
+            handleSaveSearchValue={setSavedMoviesQuery}
           />
           <ProtectedRoute
             path='/profile'

@@ -1,6 +1,6 @@
-function Search(movies, keyWord, isShort) {
+function Search(movies, query, isShort) {
   return movies.filter((movie) =>
-    movie.nameRU.toLowerCase().includes(keyWord.toLowerCase()) && (!isShort || isShort && movie.duration < 40)
+    movie.nameRU.toLowerCase().includes(query.toLowerCase()) && (!isShort || isShort && movie.duration < 40)
   );
 }
 

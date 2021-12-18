@@ -4,9 +4,8 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import Validation from '../../hooks/Validation';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function SearchForm({ handleSubmit, handleChangeRadio, defaultChecked }) {
-  const { key } = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid } = Validation({key: localStorage.getItem('searchValue'),});
+function SearchForm({ handleSubmit, handleChangeRadio, defaultChecked, query, handleSaveSearchValue }) {
+  const { values, handleChange, errors, isValid } = Validation({key: query});
 
   const [searchError, setSearchError] = useState('');
 
@@ -31,6 +30,7 @@ function SearchForm({ handleSubmit, handleChangeRadio, defaultChecked }) {
               className='search-form__input search-form__text'
               value={values.key}
               onChange={handleChange}
+              handleSaveSearchValue={handleSaveSearchValue}
               name='key'
               autoComplete='off'
               id='key-input'
@@ -40,10 +40,12 @@ function SearchForm({ handleSubmit, handleChangeRadio, defaultChecked }) {
               required
             />
           </div>
-          <span className='searchform__error' id='key-input-error'>
-              {searchError}
-            </span>
-          <FilterCheckbox filterText='Короткометражки' handleChangeRadio={handleChangeRadio} defaultChecked={defaultChecked} />
+          <span className='searchform__error' id='key-input-error'> {searchError}</span>
+          <FilterCheckbox 
+            filterText='Короткометражки'
+            handleChangeRadio={handleChangeRadio}
+            defaultChecked={defaultChecked}
+          />
         </form>
         <button type='submit' onClick={handleSearchSubmit} className='search-form__submit'>Найти</button>
       </div>
