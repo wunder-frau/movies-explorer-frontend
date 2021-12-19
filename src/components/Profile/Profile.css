@@ -31,8 +31,8 @@
   flex-direction: column;
   align-items: flex-start;
   row-gap: 17px;
-  padding-top: 123px;
-  padding-bottom: 220px;
+  margin-top: 123px;
+  margin-bottom: 220px;
 }
 
 .profile__label {
@@ -61,6 +61,13 @@
   line-height: 13px;
 }
 
+.profile__error {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  text-shadow:  #EE3465 2px 2px 2px;
+}
+
 .profile__link {
   font-size: 13px;
   line-height: 16px;
@@ -70,8 +77,10 @@
   text-decoration: none;
   border: none;
   background-color: #202020;
-  margin: 0;
+  margin: 16px 0 0 0;
   padding: 0;
+  cursor: pointer;
+  align-self: center;
 }
 
 .profile__link-edit {
@@ -80,6 +89,32 @@
 
 .profile__link-signout {
   color: #EE3465;
+}
+
+.profile__link-disabled {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background-color: #202020;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15px;
+}
+
+.profile__link-disabled:disabled {
+  background: grey;
+  color: wheat;
+  box-shadow: yellow 2px 2px 2px;
+  cursor: default;
+  pointer-events: none;
+}
+
+.profile__error-none {
+  display: none;
 }
 
 .profile__link-edit:hover {

@@ -1,5 +1,4 @@
 .register {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -89,7 +88,6 @@
 .register__link-signout:hover {
   text-shadow:  blue 2px 2px 2px;
 }
-
 
 .register__logo {
   width: 38px;
